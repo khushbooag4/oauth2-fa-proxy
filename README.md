@@ -1,6 +1,8 @@
 # oauth2-fa-proxy
 Oauth2 proxy with FA as an SSO
 
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Samagra-Development/oauth2-fa-proxy)
+
 
 ## To generate your own unique API key for .env, you could use any of the following
 
