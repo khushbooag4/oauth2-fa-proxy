@@ -24,7 +24,6 @@ services:
     restart: unless-stopped
     networks:
       fa: {}
-      httpbin: {}
     depends_on:
       - fa-search
       - fusionauth
