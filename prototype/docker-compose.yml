@@ -1,0 +1,107 @@
+# This docker-compose file can be used to bring up an example instance of oauth2-proxy
+# for manual testing and exploration of features.
+# Alongside OAuth2-Proxy, this file also starts fa to act as the identity provider,
+# etcd for storage for fa and HTTPBin as an example upstream.
+#
+# This can either be created using docker-compose
+#    docker-compose -f docker-compose.yaml <command>
+# Or:
+#    make <command> (eg. make up, make down)
+#
+# Access http://localhost:4180 to initiate a login cycle
+version: '3.0'
+
+services:
+  oauth2-proxy:
+    container_name: oauth2-proxy
+    image: quay.io/oauth2-proxy/oauth2-proxy:v7.3.0
+    command: --config /oauth2-proxy.cfg
+    ports:
+      - 4180:4180/tcp
+    hostname: oauth2-proxy
+    volumes:
+      - "./oauth2-proxy.cfg:/oauth2-proxy.cfg"
+    restart: unless-stopped
+    networks:
+      fa: {}
+      httpbin: {}
+    depends_on:
+      - fa-search
+      - fusionauth
+      - fa-db
+  
+  fa-search:
+    container_name: fa-search-oa2
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.3.1
+    environment:
+      - cluster.name=fusionauth
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=${ES_JAVA_OPTS}"
+      - discovery.type=single-node
+    restart: unless-stopped
+    networks:
+      fa: {}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - fa-es-data:/usr/share/elasticsearch/data
+
+  fusionauth:
+    container_name: fusionauth-oa2
+    image: fusionauth/fusionauth-app:latest
+    depends_on:
+      - fa-search
+    environment:
+      DATABASE_URL: jdbc:postgresql://fa-db:${FUSIONAUTH_POSTGRES_PORT}/fusionauth
+      DATABASE_ROOT_USERNAME: ${FUSIONAUTH_POSTGRES_USER}
+      DATABASE_ROOT_PASSWORD: ${FUSIONAUTH_POSTGRES_PASSWORD}
+      DATABASE_USERNAME: ${FUSIONAUTH_DATABASE_USER}
+      DATABASE_PASSWORD: ${FUSIONAUTH_DATABASE_USERNAME}
+      FUSIONAUTH_SEARCH_ENGINE_TYPE: elasticsearch
+      FUSIONAUTH_SEARCH_SERVERS: http://fa-search:9200
+      FUSIONAUTH_URL: http://fusionauth:9011
+      FUSIONAUTH_API_KEY: ${FUSIONAUTH_API_KEY}
+      FUSIONAUTH_APP_KICKSTART_FILE: ${FUSIONAUTH_APP_KICKSTART_FILE}
+      FUSIONAUTH_ADMIN_EMAIL: ${FUSIONAUTH_ADMIN_EMAIL}
+      FUSIONAUTH_ADMIN_PASSWORD: ${FUSIONAUTH_ADMIN_PASSWORD}
+    restart: unless-stopped
+    networks:
+      fa: {}
+    ports:
+      - 9012:9011
+    volumes:
+      - fa-config:/usr/local/fusionauth/config
+      - ./kickstart:/usr/local/fusionauth/kickstart
+
+  fa-db:
+    container_name: fa-db-oa2
+    image: postgres:12
+    environment:
+      - POSTGRES_USER=${FUSIONAUTH_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${FUSIONAUTH_POSTGRES_PASSWORD}
+    ports:
+      - "5437:${FUSIONAUTH_POSTGRES_PORT}"
+    networks:
+      fa: {}
+    volumes:
+      - ./pgdata-fa-db:/var/lib/postgresql/data
+
+  etcd:
+    container_name: etcd
+    image: gcr.io/etcd-development/etcd:v3.4.7
+    entrypoint: /usr/local/bin/etcd
+    command:
+      - --listen-client-urls=http://0.0.0.0:2379
+      - --advertise-client-urls=http://etcd:2379
+    networks:
+      etcd: {}
+
+networks:
+  fa: {}
+  etcd: {}
+
+volumes:
+  fa-es-data:
+  fa-config:
