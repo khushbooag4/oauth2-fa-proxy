@@ -5,8 +5,24 @@ networks:
     driver: bridge
 
 services:
+#Oauth2 proxy
+  oauth2-proxy:
+    container_name: fa-oauth2-proxy
+    image: quay.io/oauth2-proxy/oauth2-proxy:v7.3.0
+    command: --config /oauth2-proxy.cfg
+    ports:
+      - 3000:3000/tcp
+    hostname: oauth2-proxy
+    volumes:
+      - "./oauth2-proxy.cfg:/oauth2-proxy.cfg"
+    restart: unless-stopped
+    networks:
+      - cac
+    depends_on:
+      # - fa-search
+      # - fa-db
+      - fusionauth
 # Fusion Auth
-
   fa-search:
     container_name: fa-search
     networks:
