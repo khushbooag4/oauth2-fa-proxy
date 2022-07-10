@@ -5,3 +5,4 @@ pgdata-fa-db
 node_app_1/node_modules
 node_app_1/node_modules
 oauth2-proxy.cfg
+pgdata
