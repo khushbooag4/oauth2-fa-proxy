@@ -1,0 +1,92 @@
+# This docker-compose file can be used to bring up an example instance of oauth2-proxy
+# for manual testing and exploration of features.
+# Alongside OAuth2-Proxy, this file also starts Dex to act as the identity provider,
+# etcd for storage for Dex, nginx as a reverse proxy and other http services for upstreams
+#
+# This file is an extension of the main compose file and must be used with it
+#    docker-compose -f docker-compose.yaml -f docker-compose-nginx.yaml <command>
+# Alternatively:
+#    make nginx-<command> (eg make nginx-up, make nginx-down)
+#
+# Access one of the following URLs to initiate a login flow:
+#    - http://oauth2-proxy.localhost
+#    - http://httpbin.oauth2-proxy.localhost
+#
+# The OAuth2 Proxy itself is hosted at http://oauth2-proxy.oauth2-proxy.localhost
+#
+# Note, the above URLs should work with Chrome, but you may need to add hosts
+# entries for other browsers
+#    127.0.0.1 oauth2-proxy.localhost
+#    127.0.0.1 httpbin.oauth2-proxy.localhost
+#    127.0.0.1 oauth2-proxy.oauth2-proxy.localhost
+version: '3.0'
+services:
+  oauth2-proxy:
+    ports: []
+    hostname: oauth2-proxy
+    volumes:
+      - "./oauth2-proxy-nginx.cfg:/oauth2-proxy.cfg"
+    networks:
+      oauth2-proxy: {}
+      fa: {}
+
+  pg-docker-metabase:
+    container_name: pg-docker
+    image: 'postgres:12.1-alpine'
+    restart: unless-stopped
+    environment:
+      PGDATA: /var/lib/postgresql/data
+      POSTGRES_PASSWORD: docker
+      POSTGRES_USER: postgres
+      POSTGRES_DB: metabase
+    networks:
+      oauth2-proxy: {}
+      httpbin: {}
+    volumes:
+      - 'postgres:/var/lib/postgresql/data'
+  
+  metabase:
+    image: 'metabase/metabase:latest'
+    container_name: metabase-production
+    mem_limit: 3000m
+    restart: unless-stopped
+    volumes:
+      - plugins:/plugins
+    environment:
+      JAVA_TOOL_OPTIONS: '-Xmx4g'
+      MB_DB_TYPE: postgres
+      MB_DB_DBNAME: metabase
+      MB_DB_PORT: 5432
+      MB_PLUGINS_DIR: /plugins
+      MB_DB_USER: postgres
+      MB_DB_PASS: docker
+      MB_DB_HOST: pg-docker
+      MB_DB_CONNECTION_URI: 'postgres://pg-docker:5432/metabase?user=postgres&password=docker'
+    ports:
+      - '3005:3000'
+    networks:
+      oauth2-proxy: {}
+      httpbin: {}
+    depends_on:
+        - pg-docker-metabase
+    links:
+        - pg-docker-metabase
+  
+  nginx:
+    container_name: nginx
+    image: nginx:1.18
+    ports:
+      - 80:80/tcp
+    hostname: nginx
+    volumes:
+      - "./nginx.conf:/etc/nginx/conf.d/default.conf"
+    networks:
+      oauth2-proxy: {}
+      httpbin: {}
+
+networks:
+  oauth2-proxy: {}
+
+volumes:
+  postgres:
+  plugins:
