@@ -1,5 +1,7 @@
 const express = require("express");
 const path = require("path");
+const http = require("http");
+require("dotenv").config();
 var session = require("express-session");
 const app = express();
 const port = process.env.PORT;
@@ -18,9 +20,9 @@ app.get("/", (req, res) => {
 app.get("/idToken", (req, res) => {
   res.send(
     "Id Token" +
-    req.oidc.idToken +
-    "Id Claims" +
-    JSON.stringify(req.oidc.idTokenClaims, null, 2)
+      req.oidc.idToken +
+      "Id Claims" +
+      JSON.stringify(req.oidc.idTokenClaims, null, 2)
   );
 });
 
@@ -32,4 +34,5 @@ app.get("/user", (req, res) => {
   res.send(JSON.stringify(req.oidc.user, null, 2));
 });
 
+http.createServer().listen(3001, "127.0.0.1");
 app.listen(port, () => console.log(`App listening on port ${port}!`));

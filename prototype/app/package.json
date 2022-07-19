@@ -2,9 +2,9 @@
   "name": "node_app_1",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "concurrently 'PORT=3000 node src/server.js' 'PORT=3001 node src/server.js' ",
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
