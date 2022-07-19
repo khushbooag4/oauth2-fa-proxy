@@ -93,7 +93,7 @@ server {
 ```
 
 
-##Gitpod Setup
+## Gitpod Setup
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Samagra-Development/oauth2-fa-proxy)
 
