@@ -43,9 +43,9 @@ Access one of the following URLs to initiate a login flow:
 The OAuth2 Proxy itself is hosted at http://oauth2-proxy.oauth2-proxy.localhost
 > **Note** , the above URLs should work with Chrome, but you may need to add hosts entries for other browsers
 
-- 127.0.0.1 oauth2-proxy.localhost
-- 127.0.0.1 httpbin.oauth2-proxy.localhost
-- 127.0.0.1 oauth2-proxy.oauth2-proxy.localhost
+    - 127.0.0.1 oauth2-proxy.localhost
+    - 127.0.0.1 httpbin.oauth2-proxy.localhost
+    - 127.0.0.1 oauth2-proxy.oauth2-proxy.localhost
 
 ## Oauth2 endpoints
  * **/oauth2/sign_in** - the login page, which also doubles as a sign out page (it clears cookies)
