@@ -20,7 +20,6 @@ The reverse-proxy service will proxy all your requests and if authentication is 
 * Can be integrated with mutiple services
 * Can be configured with other providers like [KeyCloak](https://github.com/keycloak/keycloak)
 * Stateless Microservice
-* Increase Productivity
 * Keep separation of concerns
 * Build your application without adding code to secure your routes
 * Work both for frontend and backend 
@@ -46,7 +45,7 @@ The OAuth2 Proxy itself is hosted at http://oauth2-proxy.oauth2-proxy.localhost
 
 - 127.0.0.1 oauth2-proxy.localhost
 - 127.0.0.1 httpbin.oauth2-proxy.localhost
--  127.0.0.1 oauth2-proxy.oauth2-proxy.localhost
+- 127.0.0.1 oauth2-proxy.oauth2-proxy.localhost
 
 ## Oauth2 endpoints
  * **/oauth2/sign_in** - the login page, which also doubles as a sign out page (it clears cookies)
@@ -58,12 +57,10 @@ The OAuth2 Proxy itself is hosted at http://oauth2-proxy.oauth2-proxy.localhost
 
 
 
-
-
 ## Nginx Configuration
 > It is open source software for web serving, reverse proxying, caching, load balancing, media streaming, and more. It started out as a web server designed for maximum performance and stability.
 
-It used for routing unauthorized requests to oauth2 proxy directly without buttons
+It is used for routing unauthorized requests to oauth2 proxy directly without buttons
 
 ```
 server {
