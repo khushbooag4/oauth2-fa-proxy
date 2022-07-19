@@ -22,7 +22,7 @@ The reverse-proxy service will proxy all your requests and if authentication is 
 * Stateless Microservice
 * Keep separation of concerns
 * Build your application without adding code to secure your routes
-* Work both for frontend and backend 
+* Work both for frontends and backends 
 
 
 ## Getting started
@@ -129,8 +129,7 @@ There is still quite some room for improvement:
 * [ ] Node service with Oauth2 
 * [ ] Deploy an instance of Oauth2 proxy
 * [ ] Benchmark the proxy using testing tool
-* [ ] Horizontal Scale
 * [ ] Integrate with existing services
-      [ ] UCI ( UCI Web Channel)
-      [ ] YAUS ( Yet Another URL shortener)
-      [ ] Shiksha Platform
+    -  [ ] UCI ( UCI Web Channel)
+    -  [ ] YAUS ( Yet Another URL shortener)
+    -  [ ] Shiksha Platform
