@@ -30,10 +30,6 @@ The reverse-proxy service will proxy all your requests and if authentication is 
 To run Oauth2-fa-proxy, you can use the Docker image by running:
      
     docker-compose -f docker-compose.yaml -f docker-compose-nginx.yaml <command>
-    
-Alternatively
-   
-    make nginx-<command> (eg make nginx-up, make nginx-down)
 
 Access one of the following URLs to initiate a login flow:
 
