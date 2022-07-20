@@ -1,7 +1,7 @@
 # Oauth2-fa-proxy
 > A reverse proxy and static file server that provides authentication using Providers (Google, GitHub, and others) to validate accounts by email, domain or group.
 
-Oauth2 proxy with FA as an SSO
+Oauth2 proxy with FusionAuth as an SSO
 
 ### What does it do?
 
@@ -32,7 +32,7 @@ To run Oauth2-fa-proxy, you can use the Docker image by running:
     docker-compose -f docker-compose.yaml -f docker-compose-nginx.yaml <command>
     
 Alternatively
-   
+
     make nginx-<command> (eg make nginx-up, make nginx-down)
 
 Access one of the following URLs to initiate a login flow:
@@ -56,11 +56,8 @@ The OAuth2 Proxy itself is hosted at http://oauth2-proxy.oauth2-proxy.localhost
  * **/oauth2/auth** - only returns a 202 Accepted response or a 401 Unauthorized response; for use with the Nginx auth_request directive
 
 
-
 ## Nginx Configuration
-> It is open source software for web serving, reverse proxying, caching, load balancing, media streaming, and more. It started out as a web server designed for maximum performance and stability.
-
-It is used for routing unauthorized requests to oauth2 proxy directly without buttons
+> It is open source software for web serving, reverse proxying, caching, load balancing, media streaming, and more. It is used for routing unauthorized requests to oauth2 proxy directly without buttons
 
 ```
 server {
