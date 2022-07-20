@@ -56,6 +56,8 @@ The OAuth2 Proxy itself is hosted at http://oauth2-proxy.oauth2-proxy.localhost
  * **/oauth2/auth** - only returns a 202 Accepted response or a 401 Unauthorized response; for use with the Nginx auth_request directive
 
 
+
+
 ## Nginx Configuration
 > It is open source software for web serving, reverse proxying, caching, load balancing, media streaming, and more. It is used for routing unauthorized requests to oauth2 proxy directly without buttons
 
@@ -93,7 +95,7 @@ server {
 
 ```
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Samagra-Development/oauth2-fa-proxy)
+<!-- [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Samagra-Development/oauth2-fa-proxy)
 
 
 ## To generate your own unique API key for .env, you could use any of the following
@@ -114,7 +116,7 @@ Copy the `sample.env` and rename it as `.env`
 
 ```
 chmod +x install.sh
-sudo ./install.sh
+sudo ./install.sh -->
 ```
 
 TODOS
