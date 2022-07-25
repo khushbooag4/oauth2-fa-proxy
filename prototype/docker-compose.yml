@@ -25,6 +25,7 @@ services:
     networks:
       fa: {}
       httpbin: {}
+      oauth2-node: {}
     depends_on:
       - fa-search
       - fusionauth
@@ -108,10 +109,22 @@ services:
     networks:
       etcd: {}
 
+  oauth2-app:
+    container_name: oauth2-app
+    image: docker-express-app 
+    # restart: unless-stopped
+    volumes:
+      - ./app:/user/Documents/oauth2-fa-proxy/prototype
+    ports:
+      - 4000:3000/tcp
+    networks:
+      oauth2-node: {}
+
 networks:
   fa: {}
   etcd: {}
   httpbin: {}
+  oauth2-node: {}
 
 volumes:
   fa-es-data:

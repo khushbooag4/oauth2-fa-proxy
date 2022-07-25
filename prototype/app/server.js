@@ -1,8 +1,8 @@
 const express = require("express");
 const path = require("path");
-const http = require("http");
 require("dotenv").config();
 var session = require("express-session");
+const cors = require("cors");
 const app = express();
 const port = process.env.PORT;
 
@@ -12,9 +12,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.render("index", {
-    status: "Logged In",
-  });
+  res.send("Whoa, you got Login In");
 });
 
 app.get("/idToken", (req, res) => {
@@ -34,5 +32,4 @@ app.get("/user", (req, res) => {
   res.send(JSON.stringify(req.oidc.user, null, 2));
 });
 
-http.createServer().listen(3001, "127.0.0.1");
 app.listen(port, () => console.log(`App listening on port ${port}!`));
