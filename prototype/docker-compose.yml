@@ -113,8 +113,9 @@ services:
     container_name: oauth2-app
     image: docker-express-app 
     # restart: unless-stopped
+    # build: ./app
     volumes:
-      - ./app:/user/Documents/oauth2-fa-proxy/prototype
+      - ./app:/user
     ports:
       - 4000:3000/tcp
     networks:
