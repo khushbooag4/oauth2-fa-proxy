@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Main Page</title>
+    <style>
+        * {
+    box-sizing: border-box;
+        }
+
+div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/*Login Card*/
+.card {
+    margin: 20px;
+    height: 400px;
+    width: 650px;
+    color: black;
+    background: #02B290;
+    position: relative;
+}
+
+.btn {
+    margin-top: 10px;
+    border-radius: 3px;
+    height: 50px;
+    width: 200px;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+/*Quote*/
+.quote-text .quote {
+    color: #fff;
+    font-size: 2rem;
+    position: absolute;
+    text-align: center;
+    justify-content: center;
+}
+
+.quote-text p {
+    color: rgba(0, 0, 0, 0.911);
+    padding-top: 320px;
+    font-weight: 600;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: flex-end
+}
+
+/*Login Page*/
+.container {
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #0e4980;
+    border-radius: 5px;
+    border-top: 30%;
+    height: 300px;
+    width: 400px;
+}
+
+/*Like Button*/
+.fa-heart,
+.fa-share-alt {
+    font-size: 2rem;
+}
+
+.like-btn {
+    cursor: pointer;
+    color: #fff;
+    background: #FF6263;
+    transition: transform .4s ease-in-out;
+    border-radius: 5px;
+}
+
+.btn-dark {
+    margin-top: 10px;
+    border-radius: 3px;
+    height: 50px;
+    width: 200px;
+    font-weight: 600;
+    font-size: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    color: #fff;
+    background: #412bbc;
+    transition: transform .4s ease-in-out;
+    padding-top: 8px;
+    border-radius: 5px;
+}
+
+.like-fill {
+    transform: scale(5px);
+    background: #B9345A;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+/*generate button*/
+.gen {
+    font-size: 1rem;
+
+}
+
+/*Login Button*/
+.log {
+    width: 300px;
+}
+    </style>
+
+</head>
+<body>
+    <div class="main">
+            <div class="username">
+                <h1 class="heading mt-4" >Welcome to the Server</h1>
+            </div>
+            <div class="container-dash">
+            <div class="quote-text card">
+                 <div id="quote" class="quote"></div>
+                 <p id='author'></p>
+                 
+            </div>
+           <div class="grid">
+                <button class="like-btn btn"><i class="far fa-heart" onClick="toggle(this)">  Like</i></button>
+                <button id="btn" class="gen btn btn-primary">Generate Random Quote</button>
+            </div>
+            <div class="logout">
+                <a type = "button" href="/oauth2/logout" class="btn btn-dark my-2">Logout</a>
+            </div>
+        
+    </div>
+    <script>
+    const quoteButton = document.getElementById('btn')
+    const quotetext=document.getElementById('quote');
+    const quoteAuthor=document.getElementById('author')
+    const apiUrl = 'https://api.quotable.io/random';
+    function getQuote(){
+        fetch(apiUrl).then(response => response.json())
+        .then(data => {
+            quotetext.textContent = `"${data.content}"`;
+            quoteAuthor.textContent=` ~ ${data.author}`;
+        });
+    }
+    
+    quoteButton.addEventListener('click',() => {
+        console.log('Button Clicked')
+        getQuote();
+    })
+  function toggle(x){
+x.classList.toggle("fas")
+  }
+    </script>
+</body>
+</html> 
