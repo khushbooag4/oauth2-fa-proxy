@@ -117,16 +117,6 @@ chmod +x install.sh
 sudo ./install.sh
 ```
 
-TODOS
-----------------------------------
-There is still quite some room for improvement:
+## Contributing
 
-* [x] Understand Oauth2 spec
-* [x] Create POC for securing dummy services 
-* [ ] Node service with Oauth2 
-* [ ] Deploy an instance of Oauth2 proxy
-* [ ] Benchmark the proxy using testing tool
-* [ ] Integrate with existing services
-    -  [ ] UCI ( UCI Web Channel)
-    -  [ ] YAUS ( Yet Another URL shortener)
-    -  [ ] Shiksha Platform
+We really like contributions in several forms, see [CONTRIBUTING.md](CONTRIBUTING.md)
