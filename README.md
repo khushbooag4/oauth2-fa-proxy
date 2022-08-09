@@ -24,3 +24,6 @@ Copy the `sample.env` and rename it as `.env`
 chmod +x install.sh
 sudo ./install.sh
 ```
+## Contributing
+
+We really like contributions in several forms, see [CONTRIBUTING.md](CONTRIBUTING.md)
